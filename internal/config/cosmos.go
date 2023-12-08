@@ -14,15 +14,15 @@ import (
 
 func (c *config) Cosmos() *grpc.ClientConn {
 	return c.cosmos.Do(func() interface{} {
-		var config struct {
+		var cfg struct {
 			Addr string `fig:"addr"`
 		}
 
-		if err := figure.Out(&config).From(kv.MustGetStringMap(c.getter, "cosmos")).Please(); err != nil {
-			panic(errors.Wrap(err, "failed to figure out"))
+		if err := figure.Out(&cfg).From(kv.MustGetStringMap(c.getter, "cosmos")).Please(); err != nil {
+			panic(errors.Wrap(err, "failed to figure out cosmos config"))
 		}
 
-		con, err := grpc.Dial(config.Addr, grpc.WithInsecure(), grpc.WithKeepaliveParams(keepalive.ClientParameters{
+		con, err := grpc.Dial(cfg.Addr, grpc.WithInsecure(), grpc.WithKeepaliveParams(keepalive.ClientParameters{
 			Time:    10 * time.Second, // wait time before ping if no activity
 			Timeout: 20 * time.Second, // ping timeout
 		}))
@@ -36,15 +36,15 @@ func (c *config) Cosmos() *grpc.ClientConn {
 
 func (c *config) Tendermint() *http.HTTP {
 	return c.tendermint.Do(func() interface{} {
-		var config struct {
+		var cfg struct {
 			Addr string `fig:"addr"`
 		}
 
-		if err := figure.Out(&config).From(kv.MustGetStringMap(c.getter, "core")).Please(); err != nil {
-			panic(errors.Wrap(err, "failed to figure out"))
+		if err := figure.Out(&cfg).From(kv.MustGetStringMap(c.getter, "core")).Please(); err != nil {
+			panic(errors.Wrap(err, "failed to figure out core config"))
 		}
 
-		client, err := http.New(config.Addr, "/websocket")
+		client, err := http.New(cfg.Addr, "/websocket")
 		if err != nil {
 			panic(errors.Wrap(err, "failed to create tendermint client"))
 		}

@@ -1,4 +1,4 @@
-# evm-identity-saver-svc
+# evm-worldcoin-saver-svc
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -66,10 +66,10 @@ You will also need some environment variables to run:
 ## Run
 To start the service (in vote mode) use the following command:
 ```shell
-evm-identity-saver-svc run state-update-voter
+evm-worldcoin-saver-svc run state-update-voter
 ```
 
 To run in full mode:
 ```shell
-evm-identity-saver-svc run state-update-all
+evm-worldcoin-saver-svc run state-update-all
 ```

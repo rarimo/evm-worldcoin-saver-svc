@@ -5,24 +5,17 @@ import (
 	"sync"
 	"time"
 
-	"github.com/rarimo/evm-identity-saver-svc/internal/config"
+	"github.com/rarimo/evm-worldcoin-saver-svc/internal/config"
 	rarimocore "github.com/rarimo/rarimo-core/x/rarimocore/types"
 	"github.com/rarimo/saver-grpc-lib/voter"
 	"gitlab.com/distributed_lab/running"
 )
 
-const (
-	OpQueryGISTUpdate  = "tm.event='Tx' AND new_operation.operation_type='IDENTITY_GIST_TRANSFER'"
-	OpQueryStateUpdate = "tm.event='Tx' AND new_operation.operation_type='IDENTITY_STATE_TRANSFER'"
-)
+const opQueryWorldCoin = "tm.event='Tx' AND new_operation.operation_type='WORLDCOIN_IDENTITY_TRANSFER'"
 
 func RunVoter(ctx context.Context, cfg config.Config) {
-	gistV := NewGISTUpdateVerifier(cfg)
-	stateV := NewStateUpdateVerifier(cfg)
-
 	v := voter.NewVoter(cfg.Ethereum().NetworkName, cfg.Log(), cfg.Broadcaster(), map[rarimocore.OpType]voter.Verifier{
-		rarimocore.OpType_IDENTITY_STATE_TRANSFER: stateV,
-		rarimocore.OpType_IDENTITY_GIST_TRANSFER:  gistV,
+		rarimocore.OpType_WORLDCOIN_IDENTITY_TRANSFER: NewWorldCoinVerifier(cfg),
 	})
 
 	// catchup tends to panic on startup and doesn't handle it by itself, so we wrap it into retry loop
@@ -30,7 +23,6 @@ func RunVoter(ctx context.Context, cfg config.Config) {
 		voter.
 			NewCatchupper(cfg.Cosmos(), v, cfg.Log()).
 			Run(ctx)
-
 		return true, nil
 	}, 1*time.Second, 5*time.Second)
 
@@ -40,14 +32,7 @@ func RunVoter(ctx context.Context, cfg config.Config) {
 	go func() {
 		defer wg.Done()
 		voter.
-			NewSubscriber(v, cfg.Tendermint(), cfg.Cosmos(), OpQueryStateUpdate, cfg.Log(), cfg.Subscriber()).
-			Run(ctx)
-	}()
-
-	go func() {
-		defer wg.Done()
-		voter.
-			NewSubscriber(v, cfg.Tendermint(), cfg.Cosmos(), OpQueryGISTUpdate, cfg.Log(), cfg.Subscriber()).
+			NewSubscriber(v, cfg.Tendermint(), cfg.Cosmos(), opQueryWorldCoin, cfg.Log(), cfg.Subscriber()).
 			Run(ctx)
 	}()
 

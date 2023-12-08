@@ -4,10 +4,10 @@ project: "backend"
 image: builder
 from: golang:1.19-alpine
 docker:
-  WORKDIR: /go/src/github.com/rarimo/evm-identity-saver-svc
+  WORKDIR: /go/src/github.com/rarimo/evm-worldcoin-saver-svc
 git:
   - add: /
-    to: /go/src/github.com/rarimo/evm-identity-saver-svc
+    to: /go/src/github.com/rarimo/evm-worldcoin-saver-svc
     stageDependencies:
       setup:
         - "**/*"
@@ -17,24 +17,24 @@ shell:
     - go env -w GOPRIVATE=github.com/*
     - go env -w GONOSUMDB=github.com/*
     - go env -w GONOPROXY=github.com/*
-    - cd /go/src/github.com/rarimo/evm-identity-saver-svc
+    - cd /go/src/github.com/rarimo/evm-worldcoin-saver-svc
     - go mod tidy
   setup:
     - export CGO_ENABLED=0
     - export GOOS=linux
-    - cd /go/src/github.com/rarimo/evm-identity-saver-svc
-    - go build  -o /usr/local/bin/evm-identity-saver-svc /go/src/github.com/rarimo/evm-identity-saver-svc
+    - cd /go/src/github.com/rarimo/evm-worldcoin-saver-svc
+    - go build  -o /usr/local/bin/evm-worldcoin-saver-svc /go/src/github.com/rarimo/evm-worldcoin-saver-svc
 
 ---
 image: service
 from: alpine:3.14.6
 docker:
-  ENTRYPOINT: evm-identity-saver-svc
+  ENTRYPOINT: evm-worldcoin-saver-svc
 shell:
   setup:
     - apk add --no-cache ca-certificates
 import:
   - image: builder
-    add: /usr/local/bin/evm-identity-saver-svc
-    to: /usr/local/bin/evm-identity-saver-svc
+    add: /usr/local/bin/evm-worldcoin-saver-svc
+    to: /usr/local/bin/evm-worldcoin-saver-svc
     after: setup

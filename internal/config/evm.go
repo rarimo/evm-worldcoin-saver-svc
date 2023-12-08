@@ -13,11 +13,12 @@ import (
 )
 
 type Ethereum struct {
-	ContractAddr   common.Address    `fig:"contract_addr,required"`
-	RPCClient      *ethclient.Client `fig:"rpc,required"`
-	StartFromBlock uint64            `fig:"start_from_block"`
-	NetworkName    string            `fig:"network_name,required"`
-	BlockWindow    uint64            `fig:"block_window,required"`
+	ContractAddr        common.Address    `fig:"contract_addr,required"`
+	RPCClient           *ethclient.Client `fig:"rpc,required"`
+	StartFromBlock      uint64            `fig:"start_from_block"`
+	NetworkName         string            `fig:"network_name,required"`
+	BlockWindow         uint64            `fig:"block_window,required"`
+	MaxBlocksPerRequest uint64            `fig:"max_blocks_per_request"`
 }
 
 func (c *config) Ethereum() *Ethereum {

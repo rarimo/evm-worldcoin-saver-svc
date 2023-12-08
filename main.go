@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/rarimo/evm-identity-saver-svc/internal/cli"
+	"github.com/rarimo/evm-worldcoin-saver-svc/internal/cli"
 )
 
 func main() {
