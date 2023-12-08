@@ -6,7 +6,7 @@ require (
 	github.com/alecthomas/kingpin v2.2.6+incompatible
 	github.com/ethereum/go-ethereum v1.10.26
 	github.com/gogo/protobuf v1.3.3
-	github.com/rarimo/rarimo-core v1.0.7-0.20231206161857-c1f9b5f9a6f5
+	github.com/rarimo/rarimo-core v1.0.7-0.20231208125434-eaf4ddf6c070
 	github.com/rarimo/saver-grpc-lib v1.0.0
 	github.com/spf13/cast v1.5.1
 	github.com/tendermint/tendermint v0.34.27
