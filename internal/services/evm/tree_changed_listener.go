@@ -146,18 +146,18 @@ func (l *listener) processEvents(ctx context.Context, iter *worldid.WorldIdTreeC
 }
 
 func (l *listener) msgFromEvent(ctx context.Context, evt *worldid.WorldIdTreeChanged) (*oracletypes.MsgCreateWorldCoinIdentityTransferOp, error) {
-	num := new(big.Int).SetUint64(evt.Raw.BlockNumber)
-	header, err := l.block.HeaderByNumber(ctx, num)
+	header, err := l.block.HeaderByNumber(ctx, new(big.Int).SetUint64(evt.Raw.BlockNumber))
 	if err != nil {
 		return nil, fmt.Errorf("failed to get block header by number from event: %w", err)
 	}
 
 	return &oracletypes.MsgCreateWorldCoinIdentityTransferOp{
-		Creator:   l.txCreatorAddr,
-		Contract:  evt.Raw.Address.String(),
-		Chain:     l.homeChain,
-		PrevState: hexutil.EncodeBig(evt.PreRoot),
-		State:     hexutil.EncodeBig(evt.PostRoot),
-		Timestamp: strconv.FormatUint(header.Time, 10),
+		Creator:     l.txCreatorAddr,
+		Contract:    evt.Raw.Address.String(),
+		Chain:       l.homeChain,
+		PrevState:   hexutil.Encode(evt.PreRoot.Bytes()),
+		State:       hexutil.Encode(evt.PostRoot.Bytes()),
+		Timestamp:   strconv.FormatUint(header.Time, 10),
+		BlockNumber: evt.Raw.BlockNumber,
 	}, nil
 }
