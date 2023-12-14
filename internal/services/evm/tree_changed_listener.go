@@ -153,7 +153,7 @@ func (l *listener) msgFromEvent(ctx context.Context, evt *worldid.WorldIdTreeCha
 
 	return &oracletypes.MsgCreateWorldCoinIdentityTransferOp{
 		Creator:     l.txCreatorAddr,
-		Contract:    evt.Raw.Address.String(),
+		Contract:    evt.Raw.Address.Hex(),
 		Chain:       l.homeChain,
 		PrevState:   hexutil.Encode(evt.PreRoot.Bytes()),
 		State:       hexutil.Encode(evt.PostRoot.Bytes()),

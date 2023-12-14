@@ -84,8 +84,7 @@ func (v *verifier) verify(ctx context.Context, op rarimocore.WorldCoinIdentityTr
 		return fmt.Errorf("failed to get event: %w", err)
 	}
 
-	num := new(big.Int).SetUint64(evt.Raw.BlockNumber)
-	header, err := v.header.HeaderByNumber(ctx, num)
+	header, err := v.header.HeaderByNumber(ctx, new(big.Int).SetUint64(evt.Raw.BlockNumber))
 	if err != nil {
 		return fmt.Errorf("failed to get block header by number from event: %w", err)
 	}
@@ -102,38 +101,31 @@ func (v *verifier) getEvent(ctx context.Context, op rarimocore.WorldCoinIdentity
 		Context: ctx,
 		Start:   op.BlockNumber,
 		End:     &op.BlockNumber, // end block is inclusive
-	}, toBigIntFilter(op.PrevState), nil, toBigIntFilter(op.State))
+	}, nil, nil, nil)
 
 	if err != nil {
 		return nil, fmt.Errorf("failed to filter WorldID changed events: %w", err)
 	}
-	if !iter.Next() || iter.Event == nil {
-		return nil, errors.New("event not found")
+
+	for iter.Next() {
+		evt := iter.Event
+		if evt != nil {
+			if hexutil.Encode(evt.PostRoot.Bytes()) == op.State {
+				return evt, nil
+			}
+		}
 	}
 
-	res := *iter.Event
-	if iter.Next() {
-		return nil, errors.New("multiple events found for given block, preRoot and postRoot")
-	}
-
-	return &res, nil
+	return nil, errors.New("event not found")
 }
 
 func opFromExternalData(evt *worldid.WorldIdTreeChanged, chain string, timestamp uint64) *rarimocore.WorldCoinIdentityTransfer {
 	return &rarimocore.WorldCoinIdentityTransfer{
 		Contract:    evt.Raw.Address.Hex(),
 		Chain:       chain,
-		PrevState:   hexutil.EncodeBig(evt.PreRoot),
-		State:       hexutil.EncodeBig(evt.PostRoot),
+		PrevState:   hexutil.Encode(evt.PreRoot.Bytes()),
+		State:       hexutil.Encode(evt.PostRoot.Bytes()),
 		Timestamp:   strconv.FormatUint(timestamp, 10),
 		BlockNumber: evt.Raw.BlockNumber,
 	}
-}
-
-func toBigIntFilter(s string) []*big.Int {
-	b, ok := new(big.Int).SetString(s, 16)
-	if !ok {
-		return nil
-	}
-	return []*big.Int{b}
 }
