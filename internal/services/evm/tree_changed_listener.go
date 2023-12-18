@@ -79,6 +79,11 @@ func (l *listener) subscription(ctx context.Context) error {
 		return fmt.Errorf("failed to define last block: %w", err)
 	}
 
+	if lastBlock == 0 {
+		// Skipping window
+		return nil
+	}
+
 	l.log.Infof("Starting subscription from %d to %d", l.fromBlock, lastBlock)
 	defer l.log.Info("Subscription finished")
 

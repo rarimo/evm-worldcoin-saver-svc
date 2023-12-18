@@ -1204,8 +1204,6 @@ github.com/rarimo/broadcaster-svc v1.0.2 h1:ExQcjjWCRP5+POLDlZHrTD1ffUsBH+Dgv5FA
 github.com/rarimo/broadcaster-svc v1.0.2/go.mod h1:lYIHy+X4IqQt4eBdtMN/V352H3EV0/gO8G+32SFwUWI=
 github.com/rarimo/cosmos-sdk v0.46.7 h1:jU2PiWzc+19SF02cXM0O0puKPeH1C6Q6t2lzJ9s1ejc=
 github.com/rarimo/cosmos-sdk v0.46.7/go.mod h1:fqKqz39U5IlEFb4nbQ72951myztsDzFKKDtffYJ63nk=
-github.com/rarimo/rarimo-core v1.0.7-0.20231206161857-c1f9b5f9a6f5 h1:/waQ2jEJ/ZUQVhpGTOBBvzxPqB5+yQlfjxOsIlVCEvw=
-github.com/rarimo/rarimo-core v1.0.7-0.20231206161857-c1f9b5f9a6f5/go.mod h1:S8d3kZWPFuNsy7llrzUd8Rj92WSCrjSH2YEUD+2A+Ww=
 github.com/rarimo/rarimo-core v1.0.7-0.20231208125434-eaf4ddf6c070 h1:gug/AW6noXk5m1yff/1u2CBz8UDSWRonZPhfPAdm04k=
 github.com/rarimo/rarimo-core v1.0.7-0.20231208125434-eaf4ddf6c070/go.mod h1:auP3KgxaSwkOUrLWBifjnMbbSQTSBA9Y/gVgq1WU/B4=
 github.com/rarimo/saver-grpc-lib v1.0.0 h1:MGUVjYg7unmodYczVsLqlqZNkT4CIgKqdo6aQtL1qdE=
