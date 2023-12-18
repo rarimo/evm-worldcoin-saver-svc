@@ -1200,8 +1200,8 @@ github.com/prometheus/procfs v0.9.0/go.mod h1:+pB4zwohETzFnmlpe6yd2lSc+0/46IYZRB
 github.com/prometheus/tsdb v0.7.1 h1:YZcsG11NqnK4czYLrWd9mpEuAJIHVQLwdrleYfszMAA=
 github.com/prometheus/tsdb v0.7.1/go.mod h1:qhTCs0VvXwvX/y3TZrWD7rabWM+ijKTux40TwIPHuXU=
 github.com/rakyll/statik v0.1.7 h1:OF3QCZUuyPxuGEP7B4ypUa7sB/iHtqOTDYZXGM8KOdQ=
-github.com/rarimo/broadcaster-svc v1.0.2 h1:ExQcjjWCRP5+POLDlZHrTD1ffUsBH+Dgv5FAgcP3BXc=
-github.com/rarimo/broadcaster-svc v1.0.2/go.mod h1:lYIHy+X4IqQt4eBdtMN/V352H3EV0/gO8G+32SFwUWI=
+github.com/rarimo/broadcaster-svc v1.0.5-0.20231213135723-157bf221b443 h1:1Bh4bsyyDMT3m/NxFWn+dHruBYqWXqG2zBKyV6Pij50=
+github.com/rarimo/broadcaster-svc v1.0.5-0.20231213135723-157bf221b443/go.mod h1:bocOFLT+ABPq0yYY6S02CicUzZUPm5wWSQ52sOTRILQ=
 github.com/rarimo/cosmos-sdk v0.46.7 h1:jU2PiWzc+19SF02cXM0O0puKPeH1C6Q6t2lzJ9s1ejc=
 github.com/rarimo/cosmos-sdk v0.46.7/go.mod h1:fqKqz39U5IlEFb4nbQ72951myztsDzFKKDtffYJ63nk=
 github.com/rarimo/rarimo-core v1.0.7-0.20231208125434-eaf4ddf6c070 h1:gug/AW6noXk5m1yff/1u2CBz8UDSWRonZPhfPAdm04k=
