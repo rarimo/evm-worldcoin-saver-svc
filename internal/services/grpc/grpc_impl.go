@@ -4,8 +4,8 @@ import (
 	"context"
 	"net"
 
-	"github.com/rarimo/evm-identity-saver-svc/internal/config"
-	"github.com/rarimo/evm-identity-saver-svc/internal/services/voting"
+	"github.com/rarimo/evm-worldcoin-saver-svc/internal/config"
+	"github.com/rarimo/evm-worldcoin-saver-svc/internal/services/voting"
 	rarimotypes "github.com/rarimo/rarimo-core/x/rarimocore/types"
 	lib "github.com/rarimo/saver-grpc-lib/grpc"
 	"github.com/rarimo/saver-grpc-lib/voter"
@@ -37,8 +37,7 @@ func RunAPI(ctx context.Context, cfg config.Config) {
 			cfg.Log().WithField("who", "grpc-voter"),
 			cfg.Broadcaster(),
 			map[rarimotypes.OpType]voter.Verifier{
-				rarimotypes.OpType_IDENTITY_STATE_TRANSFER: voting.NewStateUpdateVerifier(cfg),
-				rarimotypes.OpType_IDENTITY_GIST_TRANSFER:  voting.NewGISTUpdateVerifier(cfg),
+				rarimotypes.OpType_WORLDCOIN_IDENTITY_TRANSFER: voting.NewWorldCoinVerifier(cfg),
 			},
 		),
 	})

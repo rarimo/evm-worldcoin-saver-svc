@@ -1,4 +1,4 @@
-name: Build Rarimo TSS service docker image
+name: Build EVM WorldCoin saver docker image
 on:
   workflow_dispatch:
 

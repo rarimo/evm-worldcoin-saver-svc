@@ -10,13 +10,13 @@ import (
 	"gitlab.com/distributed_lab/logan/v3"
 	"gitlab.com/distributed_lab/logan/v3/errors"
 
-	"github.com/rarimo/evm-identity-saver-svc/internal/services/grpc"
-	"github.com/rarimo/evm-identity-saver-svc/internal/services/voting"
+	"github.com/rarimo/evm-worldcoin-saver-svc/internal/services/grpc"
+	"github.com/rarimo/evm-worldcoin-saver-svc/internal/services/voting"
 
-	"github.com/rarimo/evm-identity-saver-svc/internal/services/evm"
+	"github.com/rarimo/evm-worldcoin-saver-svc/internal/services/evm"
 
 	"github.com/alecthomas/kingpin"
-	"github.com/rarimo/evm-identity-saver-svc/internal/config"
+	"github.com/rarimo/evm-worldcoin-saver-svc/internal/config"
 	"gitlab.com/distributed_lab/kit/kv"
 )
 
@@ -32,7 +32,7 @@ func Run(args []string) bool {
 	cfg := config.New(kv.MustFromEnv())
 	log = cfg.Log()
 
-	app := kingpin.New("evm-identity-saver-svc", "")
+	app := kingpin.New("evm-worldcoin-saver-svc", "")
 
 	runCmd := app.Command("run", "run command")
 
@@ -71,7 +71,7 @@ func Run(args []string) bool {
 
 		run(voting.RunVoter, "voter")
 		run(grpc.RunAPI, "grpc-api")
-		run(evm.RunStateChangeListener, "state-change-listener")
+		run(evm.RunWorldCoinListener, "state-change-listener")
 	}
 
 	if profiler := cfg.Profiler(); profiler.Enabled {
@@ -86,7 +86,7 @@ func Run(args []string) bool {
 	case stateUpdateVoter.FullCommand():
 		run(voting.RunVoter, "voter")
 	case stateUpdateSaver.FullCommand():
-		run(evm.RunStateChangeListener, "state-change-listener")
+		run(evm.RunWorldCoinListener, "state-change-listener")
 	default:
 		panic(errors.From(errors.New("unknown command"), logan.F{
 			"raw_command": cmd,

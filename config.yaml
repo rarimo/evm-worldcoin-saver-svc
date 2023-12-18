@@ -14,6 +14,7 @@ evm:
   start_from_block:
   network_name:
   block_window:
+  max_blocks_per_request:
 
 broadcaster:
   addr: ""
@@ -32,9 +33,3 @@ subscriber:
 profiler:
   enabled: true
   addr: :8080
-
-state_contract_cfg:
-  issuer_id: ['', '']
-  disable_filtration: true
-  states_per_request: 15
-  max_blocks_per_request: 100

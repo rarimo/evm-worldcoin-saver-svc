@@ -20,7 +20,6 @@ type Config interface {
 	Ethereum() *Ethereum
 	Cosmos() *grpc.ClientConn
 	Tendermint() *http.HTTP
-	States() StateV2Config
 }
 
 type config struct {
@@ -33,8 +32,6 @@ type config struct {
 	ethereum   comfig.Once
 	cosmos     comfig.Once
 	tendermint comfig.Once
-	states     comfig.Once
-	redis      comfig.Once
 
 	getter kv.Getter
 }

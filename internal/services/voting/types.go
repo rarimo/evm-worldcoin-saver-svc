@@ -8,5 +8,5 @@ import (
 
 type stateUpdateMsger interface {
 	StateUpdateMsgByHashes(ctx context.Context, issuer, latestStateHash, replacedStateHash string) (*oracletypes.MsgCreateIdentityStateTransferOp, error)
-	GISTUpdateMsgByHashes(ctx context.Context, latestGISTHash, replacedGISTHash string) (*oracletypes.MsgCreateIdentityGISTTransferOp, error)
+	WorldCoinMsgByHashes(ctx context.Context, latestGISTHash, replacedGISTHash string) (*oracletypes.MsgCreateWorldCoinIdentityTransferOp, error)
 }
