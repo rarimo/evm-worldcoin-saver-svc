@@ -1,4 +1,4 @@
-name: Build Rarimo TSS service docker image tag
+name: Build EVM WorldCoin saver docker image (tag)
 on:
   push:
     tags:
