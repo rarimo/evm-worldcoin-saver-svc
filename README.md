@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Decentralized Oracle service to observe Iden3 state smart contract events and submit them to Rarimo core.
+Decentralized Oracle service to observe World ID state smart contract events and submit them to Rarimo core.
 
 ## Configuration
 The following configuration .yaml file should be provided to launch your oracle:
