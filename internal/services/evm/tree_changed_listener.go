@@ -3,6 +3,9 @@ package evm
 import (
 	"context"
 	"fmt"
+	"github.com/rarimo/rarimo-core/x/rarimocore/crypto/pkg"
+	rarimocore "github.com/rarimo/rarimo-core/x/rarimocore/types"
+	"google.golang.org/grpc"
 	"math/big"
 	"strconv"
 	"time"
@@ -25,6 +28,7 @@ type listener struct {
 	filter      filterer
 	broadcaster broadcaster.Broadcaster
 	block       blockGetter
+	cosmos      *grpc.ClientConn
 	listenerCfg
 }
 
@@ -66,6 +70,7 @@ func RunWorldCoinListener(ctx context.Context, cfg config.Config) {
 			blockWindow:   cfg.Ethereum().BlockWindow,
 			maxBlocks:     cfg.Ethereum().MaxBlocksPerRequest,
 		},
+		cosmos: cfg.Cosmos(),
 	}
 
 	running.WithBackOff(ctx, log, runnerName,
@@ -143,6 +148,16 @@ func (l *listener) processEvents(ctx context.Context, iter *worldid.WorldIdTreeC
 			continue
 		}
 
+		exist, err := l.checkExist(ctx, msg)
+		if err != nil {
+			l.log.WithError(err).WithField("tx_hash", evt.Raw.TxHash.String()).Error("failed to check operation already exist")
+		}
+
+		if exist {
+			l.log.WithField("tx_hash", evt.Raw.TxHash.String()).Debug("operation already exist")
+			continue
+		}
+
 		if err = l.broadcaster.BroadcastTx(ctx, msg); err != nil {
 			l.log.WithError(err).WithField("tx_hash", evt.Raw.TxHash.String()).Error(err, "failed to broadcast WorldCoin identity transfer msg")
 			continue
@@ -165,4 +180,21 @@ func (l *listener) msgFromEvent(ctx context.Context, evt *worldid.WorldIdTreeCha
 		Timestamp:   strconv.FormatUint(header.Time, 10),
 		BlockNumber: evt.Raw.BlockNumber,
 	}, nil
+}
+
+func (l *listener) checkExist(ctx context.Context, msg *oracletypes.MsgCreateWorldCoinIdentityTransferOp) (bool, error) {
+	resp, err := oracletypes.NewQueryClient(l.cosmos).WorldCoinIdentityTransfer(ctx, &oracletypes.QueryGetWorldCoinIdentityTransferRequest{Msg: *msg})
+	if err != nil {
+		return false, errors.Wrap(err, "failed to get operation by message")
+	}
+
+	content, err := pkg.GetWorldCoinIdentityTransferContent(&resp.Transfer)
+	if err != nil {
+		return false, errors.Wrap(err, "failed to get operation content")
+	}
+
+	index := hexutil.Encode(content.CalculateHash())
+
+	_, err = rarimocore.NewQueryClient(l.cosmos).Operation(ctx, &rarimocore.QueryGetOperationRequest{Index: index})
+	return err == nil, nil
 }
