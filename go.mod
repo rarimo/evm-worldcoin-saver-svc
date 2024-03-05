@@ -119,6 +119,7 @@ require (
 	github.com/prometheus/common v0.39.0 // indirect
 	github.com/prometheus/procfs v0.9.0 // indirect
 	github.com/rarimo/broadcaster-svc v1.0.5-0.20231213135723-157bf221b443 // indirect
+	github.com/rarimo/go-merkle v0.0.0-20231004122345-36fa49031c66 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/rjeczalik/notify v0.9.1 // indirect
 	github.com/sasha-s/go-deadlock v0.3.1 // indirect
