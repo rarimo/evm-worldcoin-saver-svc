@@ -21,9 +21,9 @@ shell:
     - export GO111MODULE=on
     - export CGO_ENABLED=1
     - export GOOS=linux
+    - cd /go/src/github.com/rarimo/evm-worldcoin-saver-svc
     - go mod tidy
     - go mod vendor
-    - cd /go/src/github.com/rarimo/evm-worldcoin-saver-svc
     - go build -o /usr/local/bin/evm-worldcoin-saver-svc /go/src/github.com/rarimo/evm-worldcoin-saver-svc
 
 ---
