@@ -1,7 +1,6 @@
 FROM golang:1.19-alpine as buildbase
 
 WORKDIR /go/src/github.com/rarimo/evm-worldcoin-saver-svc
-COPY vendor .
 COPY . .
 
 ENV GO111MODULE="on"
@@ -9,6 +8,8 @@ ENV CGO_ENABLED=1
 ENV GOOS="linux"
 
 RUN apk add build-base
+RUN go mod tidy
+RUN go mod vendor
 RUN go build -o /usr/local/bin/evm-worldcoin-saver-svc github.com/rarimo/evm-worldcoin-saver-svc
 
 ###
