@@ -151,6 +151,7 @@ func (l *listener) processEvents(ctx context.Context, iter *worldid.WorldIdTreeC
 		exist, err := l.checkExist(ctx, msg)
 		if err != nil {
 			l.log.WithError(err).WithField("tx_hash", evt.Raw.TxHash.String()).Error("failed to check operation already exist")
+			return
 		}
 
 		if exist {
