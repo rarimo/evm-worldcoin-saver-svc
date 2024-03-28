@@ -165,6 +165,8 @@ func (l *listener) processEvents(ctx context.Context, iter *worldid.WorldIdTreeC
 			l.log.WithError(err).WithField("tx_hash", evt.Raw.TxHash.String()).Error(err, "failed to broadcast WorldCoin identity transfer msg")
 			continue
 		}
+
+		l.log.WithField("tx_hash", evt.Raw.TxHash.String()).WithField("state", msg.State).Debug("Message has been broadcast")
 	}
 }
 
